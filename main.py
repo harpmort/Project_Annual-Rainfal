@@ -15,3 +15,19 @@ def fetch_data_2012():
     else:
       info2012[table2012[time][3]] += sum(rain)
   return info2012
+  
+  def fetch_data_2013():
+  """bring all data in files to dictionary and sum values of each dictionary"""
+  rainfall2013_part1=open('RainfallHourlyData2013_Part1.csv',newline='')
+  rainfall2013_part2=open('RainfallHourlyData2013_Part2.csv',newline='')
+  data1 = csv.reader(rainfall2013_part1)
+  data2 = csv.reader(rainfall2013_part2)
+  table2013=[row for row in data1]+[row for row in data2]
+  info2013 = {}
+  for time in range(len(table2013)):
+    rain = [float(i) for i in table2013[time][-23:]]
+    if table2013[time][3] not in info2013:
+      info2013[table2013[time][3]] = sum(rain)
+    else:
+      info2013[table2013[time][3]] += sum(rain)
+  return info2013
