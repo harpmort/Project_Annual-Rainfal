@@ -1,5 +1,6 @@
 """Annual-Rainfall"""
 import csv
+import folium
 def fetch_data_2012():
   """bring all data in files to dictionary and sum values of each dictionary"""
   rainfall2012_part1=open('RainfallHourlyData2012_Part1.csv',newline='')
@@ -47,3 +48,14 @@ def fetch_data_2014():
     else:
       info2014[table2014[time][3]] += sum(rain)
   return info2014
+
+def mark_gps_map():
+    """Add coordinates file as marker point and mark it in OpenStreetMap."""
+    point=open('point of province.txt',newline='')
+    gps = csv.reader(point)
+    table = [row for row in gps]
+    map_osm = folium.Map(location=[13.7278956, 100.52412349999997], zoom_start=6, tiles='OpenStreetMap')
+    for i in range(len(table)):
+        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000)
+    map_osm.create_map(path='testmap.html')
+mark_gps_map()
