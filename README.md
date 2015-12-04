@@ -9,3 +9,4 @@
 
 #Module
   - CSV Module
+  - folium Module
