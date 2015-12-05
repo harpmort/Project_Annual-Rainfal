@@ -10,3 +10,4 @@
 #Module
   - CSV Module
   - folium Module
+  - pygal Module
