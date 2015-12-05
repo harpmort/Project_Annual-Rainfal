@@ -50,12 +50,21 @@ def fetch_data_2014():
   return info2014
 
 def mark_gps_map():
-    """Add coordinates file as marker point and mark it in OpenStreetMap."""
+    """Add coordinates file as marker point, mark it in OpenStreetMap and create pop-up for describe that point."""
     point=open('point of province.txt',newline='')
     gps = csv.reader(point)
     table = [row for row in gps]
     map_osm = folium.Map(location=[13.7278956, 100.52412349999997], zoom_start=6, tiles='OpenStreetMap')
+    data2012 = fetch_data_2012()
+    data2013 = fetch_data_2013()
+    data2014 = fetch_data_2014()
     for i in range(len(table)):
-        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000)
-    map_osm.create_map(path='testmap.html')
+        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='black',
+                              fill_color='red', fill_opacity=0.2
+                             ,popup='จังหวัด : '+table[i][0]+'<br>Annual Rainfall 2012 : '+\
+                              str('%.2f' %data2012[table[i][0]])+' mm'+'<br>Annual Rainfall 2013 : '+\
+                              str('%.2f' %data2013[table[i][0]])+' mm'+\
+               '<br>Annual Rainfall 2014 : '+str('%.2f' %data2014[table[i][0]])+' mm')
+    map_osm.create_map(path='Annual Rainfall Map.html')
 mark_gps_map()
+
