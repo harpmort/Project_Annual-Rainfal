@@ -49,7 +49,7 @@ def fetch_data_2014():
       info2014[table2014[time][3]] += sum(rain)
   return info2014
 
-def call_data_2012():
+def call_data():
   """Call data annual rainfall in 2012-2014"""
   data2012 = fetch_data_2012()
   data2013 = fetch_data_2013()
@@ -61,7 +61,7 @@ def create_pie_graph_province():
   point=open('point of province.txt',newline='')
   gps = csv.reader(point)
   table = [row for row in gps]
-  data2012, data2013, data2014 = call_data_2012(), call_data_2013(), call_data_2014()
+  data2012, data2013, data2014 = call_data
   list_summary = [data2012, data2013, data2014]
   north = ['เชียงราย', 'เชียงใหม่', 'น่าน', 'พะเยา', 'แพร่', 'แม่ฮ่องสอน', 'ลำปาง', 'ลำพูน', 'อุตรดิตถ์']
   eastnorth = ['กาฬสินธ์ุ', 'ขอนแก่น', 'ชัยภูมิ', 'นครพนม', 'นครราชสีมา', 'บึงกาฬ', 'บุรีรัมย์', 'มหาสารคาม', 'มุกดาหาร',\
