@@ -106,6 +106,28 @@ def create_pie_graph_province():
   pie_chart.render_in_browser()
 creat_pie_graph_province()
 
+def compare_rainfall_of_provinces():
+    """Compare rainfall of two provinces in the years 2012-2014 by input two province, if want to stop. input 'stop'."""
+    point=open('point of province.txt',newline='')
+    gps = csv.reader(point)
+    table = [row for row in gps]
+    data2012, data2013, data2014 = call_data()
+    while True:
+        line_chart = pygal.Line()
+        line_chart.title = 'Compare annual rainfall of provinces(in %)'
+        line_chart.x_labels = map(str, range(2012, 2015))
+        province_1 = input()
+        if province_1 == "stop":
+            return
+        province_2 = input()
+        for i in range(len(table)):
+            if province_1 == table[i][0]:
+                line_chart.add(table[i][0], [data2012[table[i][0]], data2013[table[i][0]], data2014[table[i][0]]])
+            if province_2 == table[i][0]:
+                line_chart.add(table[i][0], [data2012[table[i][0]], data2013[table[i][0]], data2014[table[i][0]]])
+        line_chart.render_in_browser()
+compare_rainfall_of_provinces()
+
 def mark_gps_map():
     """Add coordinates file as marker point, mark it in OpenStreetMap and create pop-up for describe that point."""
     point=open('point of province.txt',newline='')
