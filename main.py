@@ -116,8 +116,8 @@ def mark_gps_map():
     data2013 = fetch_data_2013()
     data2014 = fetch_data_2014()
     for i in range(len(table)):
-        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='black',
-                              fill_color='red', fill_opacity=0.2
+        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='green',
+                              fill_color='blue', fill_opacity=0.2
                              ,popup='จังหวัด : '+table[i][0]+'<br>Annual Rainfall 2012 : '+\
                               str('%.2f' %data2012[table[i][0]])+' mm'+'<br>Annual Rainfall 2013 : '+\
                               str('%.2f' %data2013[table[i][0]])+' mm'+\
