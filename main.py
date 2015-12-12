@@ -142,6 +142,7 @@ def mark_gps_map():
     max_2013, min_2013 = values2013[-1], values2013[0]
     max_2014, min_2014 = values2014[-1], values2014[0]
     pv_12_max, pv_12_min, pv_13_max, pv_13_min, pv_14_max, pv_14_min = 'x12', 'n12', 'x13', 'n13', 'x14', 'n14'
+    sum_rainfall = 0
     for i in range(len(table)):
         if data2012[table[i][0]] == max_2012:
             pv_12_max = table[i][0]
@@ -155,12 +156,21 @@ def mark_gps_map():
             pv_14_max = table[i][0]
         if data2014[table[i][0]] == min_2014:
             pv_14_min = table[i][0]
+        sum_rainfall += data2012[table[i][0]]+data2013[table[i][0]]+data2014[table[i][0]]
         map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='blue',
                               fill_color='green', fill_opacity=0.2
                              ,popup='จังหวัด : '+table[i][0]+'<br>Annual Rainfall 2012 : '+str('%.2f' %data2012[table[i][0]])+\
                ' mm'+'<br>Annual Rainfall 2013 : '+str('%.2f' %data2013[table[i][0]])+' mm'+\
                '<br>Annual Rainfall 2014 : '+str('%.2f' %data2014[table[i][0]])+' mm')
-    map_osm.simple_marker([12.7278956, 100.52412349999997], popup='Summary Report<br>')
+    sum_rainfall = sum_rainfall/3
+    map_osm.simple_marker([12.7278956, 100.52412349999997], popup='Summary Report<br>'+\
+                         'Average in three year : '+str('%.2f' %sum_rainfall)+' mm'+'<br>Max annual rainfall in 2012 : '+\
+                         pv_12_max+' '+str('%.2f' %max_2012)+' mm'+'<br>Min annual rainfall in 2012 : '+pv_12_min+\
+                         ' '+str('%.2f' %min_2012)+ 'mm'+'<br>Max annual rainfall in 2013 : '+\
+                         pv_13_max+' '+str('%.2f' %max_2013)+' mm'+'<br>Min annual rainfall in 2013 : '+pv_13_min+\
+                         ' '+str('%.2f' %min_2013)+' mm'+'<br>Max annual rainfall in 2014 : '+\
+                         pv_14_max+' '+str('%.2f' %max_2014)+' mm'+'<br>Min annual rainfall in 2014 : '+pv_14_min+\
+                         ' '+str('%.2f' %min_2014)+' mm')
     map_osm.create_map(path='Annual Rainfall Map.html')
     print('create map success')
 mark_gps_map()
