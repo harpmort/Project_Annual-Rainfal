@@ -134,16 +134,33 @@ def mark_gps_map():
     gps = csv.reader(point)
     table = [row for row in gps]
     map_osm = folium.Map(location=[13.7278956, 100.52412349999997], zoom_start=6, tiles='OpenStreetMap')
-    data2012 = fetch_data_2012()
-    data2013 = fetch_data_2013()
-    data2014 = fetch_data_2014()
+    data2012, data2013, data2014 = call_data()
+    values2012 = sorted(list(data2012.values()))
+    values2013 = sorted(list(data2013.values()))
+    values2014 = sorted(list(data2014.values()))
+    max_2012, min_2012 = values2012[-1], values2012[0]
+    max_2013, min_2013 = values2013[-1], values2013[0]
+    max_2014, min_2014 = values2014[-1], values2014[0]
+    pv_12_max, pv_12_min, pv_13_max, pv_13_min, pv_14_max, pv_14_min = 'x12', 'n12', 'x13', 'n13', 'x14', 'n14'
     for i in range(len(table)):
-        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='green',
-                              fill_color='blue', fill_opacity=0.2
-                             ,popup='จังหวัด : '+table[i][0]+'<br>Annual Rainfall 2012 : '+\
-                              str('%.2f' %data2012[table[i][0]])+' mm'+'<br>Annual Rainfall 2013 : '+\
-                              str('%.2f' %data2013[table[i][0]])+' mm'+\
+        if data2012[table[i][0]] == max_2012:
+            pv_12_max = table[i][0]
+        if data2012[table[i][0]] == min_2012:
+            pv_12_min = table[i][0]
+        if data2013[table[i][0]] == max_2013:
+            pv_13_max = table[i][0]
+        if data2013[table[i][0]] == min_2013:
+            pv_13_min = table[i][0]
+        if data2014[table[i][0]] == max_2014:
+            pv_14_max = table[i][0]
+        if data2014[table[i][0]] == min_2014:
+            pv_14_min = table[i][0]
+        map_osm.circle_marker(location=[table[i][1], table[i][2]], radius=10000,line_color='blue',
+                              fill_color='green', fill_opacity=0.2
+                             ,popup='จังหวัด : '+table[i][0]+'<br>Annual Rainfall 2012 : '+str('%.2f' %data2012[table[i][0]])+\
+               ' mm'+'<br>Annual Rainfall 2013 : '+str('%.2f' %data2013[table[i][0]])+' mm'+\
                '<br>Annual Rainfall 2014 : '+str('%.2f' %data2014[table[i][0]])+' mm')
+    map_osm.simple_marker([12.7278956, 100.52412349999997], popup='Summary Report<br>')
     map_osm.create_map(path='Annual Rainfall Map.html')
     print('create map success')
 mark_gps_map()
