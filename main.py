@@ -1,6 +1,7 @@
 """Annual-Rainfall"""
 import csv
 import folium
+import pygal
 def fetch_data_2012():
     """bring all data in files to dictionary and sum values of each dictionary"""
     rainfall2012_part1=open('RainfallHourlyData2012_Part1.csv',newline='')
@@ -56,12 +57,12 @@ def call_data():
     data2014 = fetch_data_2014()
     return data2012, data2013, data2014
 
-def create_pie_graph_province():
+def build_pie_graph_province():
     """Input province that you want and show graph annual rainfall in 2012-2014 on browser."""
     point=open('point of province.txt',newline='')
     gps = csv.reader(point)
     table = [row for row in gps]
-    data2012, data2013, data2014 = call_data
+    data2012, data2013, data2014 = call_data()
     list_summary = [data2012, data2013, data2014]
     north = ['เชียงราย', 'เชียงใหม่', 'น่าน', 'พะเยา', 'แพร่', 'แม่ฮ่องสอน', 'ลำปาง', 'ลำพูน', 'อุตรดิตถ์']
     eastnorth = ['กาฬสินธ์ุ', 'ขอนแก่น', 'ชัยภูมิ', 'นครพนม', 'นครราชสีมา', 'บึงกาฬ', 'บุรีรัมย์', 'มหาสารคาม', 'มุกดาหาร',\
@@ -99,7 +100,7 @@ def create_pie_graph_province():
         pie_chart.add('ภาคตะวันตก', [rainfall_w])
         pie_chart.add('ภาคใต้', [rainfall_s])
         pie_chart.render_in_browser()
-creat_pie_graph_province()
+build_pie_graph_province()
 
 def compare_rainfall_of_provinces():
     """Compare rainfall of two provinces in the years 2012-2014 by input two province, if want to stop. input 'stop'."""
